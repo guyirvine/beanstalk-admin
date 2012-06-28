@@ -1,0 +1,6 @@
+*.log
+out
+err
+*DS_Store*
+beanstalk-admin-*.gem
+build

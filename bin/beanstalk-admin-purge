@@ -1,13 +1,11 @@
 #!/usr/bin/env ruby
 
-require "amqp"
+require "beanstalk-client"
 
 if ARGV.length != 1 then
 	abort( "Usage: beanstalk-admin-purge <queue name>" )
 end
 queueName = ARGV[0]
-
-require "beanstalk-client"
 
 if ARGV.length == 1 then
 	queueName = ARGV[0]
