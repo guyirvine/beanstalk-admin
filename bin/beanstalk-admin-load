@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require "beanstalk-client"
+
+if ARGV.length == 1 then
+    queueName = ARGV[0]
+else
+    abort( "Usage: cat <filename> | beanstalk-admin-load <queue name>" )
+end
+
+content = STDIN.read
+list = YAML::load(content)
+
+beanstalk = Beanstalk::Pool.new(['localhost:11300'])
+begin
+    beanstalk.use(queueName)
+    list.each do |msg|
+        beanstalk.put msg
+    end
+
+rescue Exception => e
+    if e.message == "TIMED_OUT" then
+        puts "Timeout"
+    else
+        raise
+    end
+end
+
+puts "#{list.length} msgs loaded to queue: #{queueName}"

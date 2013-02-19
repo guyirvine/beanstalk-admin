@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require "beanstalk-client"
+
+if ARGV.length == 1 then
+	queueName = ARGV[0]
+else
+	abort( "Usage: beanstalk-admin-dump <queue name>" )
+end
+
+
+beanstalk = Beanstalk::Pool.new(['localhost:11300'])
+jobList = Array.new
+bodyList = Array.new
+begin
+	tubeStats = beanstalk.stats_tube(queueName)
+    count = tubeStats["current-jobs-ready"].to_i
+
+	beanstalk.watch(queueName)
+	1.upto(count) do
+		job = beanstalk.reserve 1
+		jobList << job
+        bodyList << job.body
+	end
+rescue Exception => e
+	if e.message == "TIMED_OUT" then
+		puts "Timeout"
+	else
+		raise
+	end
+end
+
+puts YAML::dump(bodyList)
+jobList.each do |job|
+	job.release
+end

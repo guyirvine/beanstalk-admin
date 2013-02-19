@@ -4,3 +4,5 @@ err
 *DS_Store*
 beanstalk-admin-*.gem
 build
+*xcworkspace*
+*data*
