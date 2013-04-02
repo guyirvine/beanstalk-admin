@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'beanstalk-admin'
-  s.version     = '0.0.2'
-  s.date        = '2012-06-29'
+  s.version     = '0.0.4'
+  s.date        = '2013-02-21'
   s.summary     = "Admin tools while running beanstalk"
   s.description = "A number of administration tools for working with beanstalk tubes"
   s.authors     = ["Guy Irvine"]
@@ -11,4 +11,8 @@ Gem::Specification.new do |s|
   s.executables << 'beanstalk-admin-list'
   s.executables << 'beanstalk-admin-peek'
   s.executables << 'beanstalk-admin-purge'
+  s.executables << 'beanstalk-admin-dump'
+  s.executables << 'beanstalk-admin-load'
+  s.executables << 'beanstalk-admin-movetoback'
+  s.executables << 'beanstalk-admin-pop'
 end
